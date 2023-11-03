@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "550434648433",
+    "project_id": "budgeteer-5fc70",
+    "storage_bucket": "budgeteer-5fc70.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550434648433:android:bf2383b2e5d3ac51f746d0",
+        "android_client_info": {
+          "package_name": "edu.bloomu.budgetapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBA_GhpE0Q4IpMHdUKpDTOmWhxqx_JK3Kk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

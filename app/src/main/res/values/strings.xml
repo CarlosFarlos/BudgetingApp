@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">BudgetApp</string>
+    <string name="budgeteer_logo">Budgeteer Logo</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="create_an_account">Create an Account</string>
+    <string name="login">Login</string>
+</resources>
