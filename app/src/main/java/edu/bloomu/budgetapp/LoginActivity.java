@@ -3,13 +3,13 @@ package edu.bloomu.budgetapp;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Button;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import at.favre.lib.crypto.bcrypt.BCrypt;
@@ -20,14 +20,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 
+/**
+ * Displays Username and Password fields, and two buttons. One button attempts
+ * to create a new user account with the information provided by the user in
+ * the fields. The other button attempts to log
+ */
 
 public class LoginActivity extends AppCompatActivity
 {
 
     FirebaseDatabase db;
-    DatabaseReference myRef;
     FirebaseAuth auth;
 
     EditText unameField, pwordField;
@@ -55,11 +58,11 @@ public class LoginActivity extends AppCompatActivity
 
         // Login button functions
         Button loginBtn = findViewById(R.id.login_btn);
-        loginBtn.setOnClickListener(view -> { loginButtonHandler(); });
+        loginBtn.setOnClickListener(view -> loginButtonHandler());
 
         // Create account button functions
         Button createAccountBtn = findViewById(R.id.account_create_btn);
-        createAccountBtn.setOnClickListener(view -> {createButtonHandler();});
+        createAccountBtn.setOnClickListener(view -> createButtonHandler());
     }
 
     /**
@@ -127,6 +130,7 @@ public class LoginActivity extends AppCompatActivity
                                 .verify(password.toCharArray(), hashedPass).verified)
                         {
                             //Start new activity with the username as an extra
+                            startMainActivity(dbUsername);
                         } else {
                             //Error toast
                             Toast.makeText(getApplicationContext(),
@@ -137,10 +141,9 @@ public class LoginActivity extends AppCompatActivity
 
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.d("Database Error", "Error: " + error.getMessage());
             }
         });
     }
@@ -187,5 +190,15 @@ public class LoginActivity extends AppCompatActivity
                         Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    /**
+     * Starts the next activity once a user has valid login credentials
+     */
+    private void startMainActivity(String username)
+    {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("username", username);
+        startActivity(intent);
     }
 }
