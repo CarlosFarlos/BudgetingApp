@@ -24,7 +24,9 @@ import com.google.firebase.database.ValueEventListener;
 /**
  * Displays Username and Password fields, and two buttons. One button attempts
  * to create a new user account with the information provided by the user in
- * the fields. The other button attempts to log
+ * the fields. The other button attempts to log users in.
+ *
+ * @author Carlos Ivan Oquendo-Pagan
  */
 
 public class LoginActivity extends AppCompatActivity
@@ -32,7 +34,6 @@ public class LoginActivity extends AppCompatActivity
 
     FirebaseDatabase db;
     FirebaseAuth auth;
-
     EditText unameField, pwordField;
     Button createAcctBtn, loginBtn;
 

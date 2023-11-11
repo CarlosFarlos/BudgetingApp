@@ -7,16 +7,62 @@
     tools:context=".MainActivity"
     tools:ignore="ExtraText">
 
-    <FrameLayout
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="1175sp"
-        android:background="@color/logo_yellow"
+        android:layout_height="1125sp"
+        android:background="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:ignore="MissingConstraints" >
-    </FrameLayout>
+        tools:ignore="MissingConstraints"
+        android:name="edu.bloomu.budgetapp.DashboardFragment"
+        />
 
+    <ImageButton
+        android:id="@+id/budget_view_btn"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:background="@drawable/rounded_main_btn_invert"
+        android:src="@drawable/tiny_pig"
+        app:layout_constraintWidth_percent="0.333"
+
+        app:layout_constraintTop_toBottomOf="@id/fragment_container"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/add_view_btn"
+        android:contentDescription="@string/dollar_sign_img"
+    />
+
+
+    <ImageButton
+        android:id="@+id/add_view_btn"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:background="@drawable/rounded_main_btn"
+        android:src="@drawable/add_invert"
+        app:layout_constraintWidth_percent="0.333"
+
+
+        app:layout_constraintTop_toBottomOf="@id/fragment_container"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/budget_view_btn"
+        app:layout_constraintRight_toLeftOf="@id/chart_view_btn"
+        android:contentDescription="@string/bar_graph_img" />
+
+    <ImageButton
+        android:id="@+id/chart_view_btn"
+        android:layout_width="0dp"
+        android:layout_height="150sp"
+        android:background="@drawable/rounded_main_btn"
+        android:src="@drawable/tiny_pie_invert"
+        app:layout_constraintWidth_percent="0.333"
+
+        app:layout_constraintTop_toBottomOf="@id/fragment_container"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/add_view_btn"
+        android:contentDescription="@string/pie_chart_img"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
