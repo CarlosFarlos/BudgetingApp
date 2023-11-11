@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity
                                 .verify(password.toCharArray(), hashedPass).verified)
                         {
                             //Start new activity with the username as an extra
-                            startMainActivity(dbUsername);
+                            startMainActivity(userSnapshot.getRef());
                         } else {
                             //Error toast
                             Toast.makeText(getApplicationContext(),
@@ -196,10 +196,10 @@ public class LoginActivity extends AppCompatActivity
     /**
      * Starts the next activity once a user has valid login credentials
      */
-    private void startMainActivity(String username)
+    private void startMainActivity(DatabaseReference ref)
     {
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("username", username);
+        intent.putExtra("dataKey", ref.getKey());
         startActivity(intent);
     }
 }

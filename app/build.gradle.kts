@@ -30,7 +30,7 @@ android {
 }
 
 dependencies {
-
+    implementation("com.google.code.gson:gson:2.8.9")
     implementation("at.favre.lib:bcrypt:0.9.0")
     implementation("com.google.firebase:firebase-auth:20.0.1")
     implementation("com.google.firebase:firebase-firestore:24.9.0")

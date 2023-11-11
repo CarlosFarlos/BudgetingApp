@@ -8,10 +8,18 @@
     <include
         android:id="@+id/add_budget_layout"
         layout="@layout/add_budget"
-        android:layout_width="400dp"
+        android:layout_width="500dp"
         android:layout_height="125dp"
-        android:layout_gravity="top|center"
-        android:layout_marginTop="50dp"
+        android:layout_gravity="center|center"
+        android:layout_marginBottom="250dp"
+        />
+
+    <include
+        android:id="@+id/add_expense_layout"
+        layout="@layout/add_expense"
+        android:layout_width="500dp"
+        android:layout_height="125dp"
+        android:layout_gravity="center|center|center_vertical"
         />
 
 </FrameLayout>

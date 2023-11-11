@@ -4,8 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.ArraySet;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Set;
 
 /**
  * Displays fragment container and three buttons. The fragment container will
@@ -18,6 +26,10 @@ import android.widget.ImageButton;
  */
 public class MainActivity extends AppCompatActivity {
 
+    public EditText editBudgetName, editMaxAmount;
+    public Button buttonSubmit;
+
+    public DatabaseReference userRef;
     ImageButton dashButton, addButton, chartButton;
     String username;
     @Override
@@ -26,7 +38,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
+
         username = intent.getStringExtra("username");
+        String dataKey = intent.getStringExtra("dataKey");
+        userRef = FirebaseDatabase.getInstance().getReference()
+                .child("users").child(dataKey);
+
+
+        Budget.getBudgets(userRef);
 
         // Button to navigate to the dashboard fragment
         dashButton = findViewById(R.id.budget_view_btn);
@@ -39,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         // Button to navigate to the pie chart fragment
         chartButton = findViewById(R.id.chart_view_btn);
         chartButton.setOnClickListener(this::onChartButtonClick);
+
+
     }
 
     /**
@@ -111,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
     private void onDashButtonClick(View view)
     {
         alternateButtonColor(dashButton);
+        AddFragment addFragment = AddFragment.newInstance(userRef);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.enter_down_to_up,
                 R.anim.exit_up_to_down, R.anim.enter_up_to_down,
