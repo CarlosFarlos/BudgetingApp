@@ -14,6 +14,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -45,6 +47,11 @@ public class Budget
     {
         this.currentSpend = currentSpend;
     }
+
+    public void setMaxAmount(double maxAmount) {
+        this.maxAmount = maxAmount;
+    }
+
     public String getName()
     {
         return name;
@@ -53,7 +60,7 @@ public class Budget
     /**
      * Saves the set of budgets to SharedPreferences
      */
-    public static void saveBudgets(Set<Budget> budgetSet, DatabaseReference userDbRef)
+    public static void saveBudgets(HashSet<Budget> budgetSet, DatabaseReference userDbRef)
     {
         Gson gson = new Gson();
         String json = gson.toJson(budgetSet);
@@ -63,7 +70,7 @@ public class Budget
     /**
      * Loads the set of budgets from SharedPreferences
      */
-    public static Set<Budget> getBudgets(DatabaseReference userDbRef)
+    public static HashSet<Budget> getBudgets(DatabaseReference userDbRef)
     {
         final String[] json = new String[1];
         Gson gson = new Gson();
@@ -83,8 +90,12 @@ public class Budget
             }
         });
 
-        Type setType = new TypeToken<Set<Budget>>(){}.getType();
-        return gson.fromJson(json[0], setType);
+        Type setType = new TypeToken<HashSet<Budget>>(){}.getType();
+        HashSet<Budget> budgets = gson.fromJson(json[0], setType);
+        if (budgets == null) {
+            budgets = new HashSet<Budget>();
+        }
+        return budgets;
     }
 
 }

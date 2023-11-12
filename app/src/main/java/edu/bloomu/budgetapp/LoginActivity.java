@@ -130,6 +130,9 @@ public class LoginActivity extends AppCompatActivity
                         if(BCrypt.verifyer()
                                 .verify(password.toCharArray(), hashedPass).verified)
                         {
+                            Toast.makeText(getApplicationContext(),
+                                    "Logged in Successfully.",
+                            Toast.LENGTH_SHORT).show();
                             //Start new activity with the username as an extra
                             startMainActivity(userSnapshot.getRef());
                         } else {
@@ -180,6 +183,7 @@ public class LoginActivity extends AppCompatActivity
                     DatabaseReference newUserRef = userRef.push();
                     newUserRef.child("username").setValue(enteredUser);
                     newUserRef.child("password").setValue(hashedPass);
+                    newUserRef.child("budgets").setValue("");
 
                     Toast.makeText(getApplicationContext(), "Account created.",
                             Toast.LENGTH_SHORT).show();

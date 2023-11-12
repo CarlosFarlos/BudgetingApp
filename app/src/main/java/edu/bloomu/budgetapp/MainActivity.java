@@ -132,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
     private void onDashButtonClick(View view)
     {
         alternateButtonColor(dashButton);
-        AddFragment addFragment = AddFragment.newInstance(userRef);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.enter_down_to_up,
                 R.anim.exit_up_to_down, R.anim.enter_up_to_down,
@@ -149,11 +148,12 @@ public class MainActivity extends AppCompatActivity {
     private void onAddButtonClick(View view)
     {
         alternateButtonColor(addButton);
+        AddFragment addFragment = AddFragment.newInstance(userRef);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.enter_down_to_up,
                 R.anim.exit_up_to_down, R.anim.enter_down_to_up,
                 R.anim.exit_up_to_down);
-        transaction.replace(R.id.fragment_container, new AddFragment());
+        transaction.replace(R.id.fragment_container, addFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
