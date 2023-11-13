@@ -1,0 +1,36 @@
+<!-- res/layout/budget_item_layout.xml -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <!-- Budget Name -->
+    <TextView
+        android:id="@+id/textViewBudgetName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Budget Name"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <!-- Amount Spent -->
+    <TextView
+        android:id="@+id/textViewAmountSpent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewBudgetName"
+        android:layout_marginTop="8dp"
+        android:text="Amount Spent: $0.00"
+        android:textSize="14sp"/>
+
+    <!-- Maximum Amount -->
+    <TextView
+        android:id="@+id/textViewMaxAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewAmountSpent"
+        android:layout_marginTop="4dp"
+        android:text="Max Amount: $0.00"
+        android:textSize="14sp"/>
+</RelativeLayout>

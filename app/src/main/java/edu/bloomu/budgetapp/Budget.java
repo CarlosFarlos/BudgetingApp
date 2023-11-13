@@ -1,22 +1,16 @@
 package edu.bloomu.budgetapp;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Budget class to hold information on user budgets
@@ -38,10 +32,14 @@ public class Budget
         return maxAmount;
     }
 
+    public String getMaxAmountString() { return Double.toString(maxAmount); }
+
     public double getCurrentSpend()
     {
         return currentSpend;
     }
+
+    public String getCurrentSpendString() { return Double.toString(currentSpend); }
 
     public void setCurrentSpend(double currentSpend)
     {
@@ -58,7 +56,7 @@ public class Budget
     }
 
     /**
-     * Saves the set of budgets to SharedPreferences
+     * Saves the set of budgets to the database
      */
     public static void saveBudgets(HashSet<Budget> budgetSet, DatabaseReference userDbRef)
     {
@@ -68,7 +66,7 @@ public class Budget
     }
 
     /**
-     * Loads the set of budgets from SharedPreferences
+     * Loads the set of budgets from the database
      */
     public static HashSet<Budget> getBudgets(DatabaseReference userDbRef)
     {
@@ -93,7 +91,7 @@ public class Budget
         Type setType = new TypeToken<HashSet<Budget>>(){}.getType();
         HashSet<Budget> budgets = gson.fromJson(json[0], setType);
         if (budgets == null) {
-            budgets = new HashSet<Budget>();
+            budgets = new HashSet<>();
         }
         return budgets;
     }

@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         chartButton = findViewById(R.id.chart_view_btn);
         chartButton.setOnClickListener(this::onChartButtonClick);
 
-
+        dashButton.callOnClick();
     }
 
     /**
@@ -132,11 +132,12 @@ public class MainActivity extends AppCompatActivity {
     private void onDashButtonClick(View view)
     {
         alternateButtonColor(dashButton);
+        DashboardFragment dashboardFragment = DashboardFragment.newInstance(userRef);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.enter_down_to_up,
                 R.anim.exit_up_to_down, R.anim.enter_up_to_down,
                 R.anim.exit_down_to_up);
-        transaction.replace(R.id.fragment_container, new DashboardFragment());
+        transaction.replace(R.id.fragment_container, dashboardFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

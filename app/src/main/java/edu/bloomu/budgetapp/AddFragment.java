@@ -1,54 +1,34 @@
 package edu.bloomu.budgetapp;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.text.TextUtils;
-import android.util.ArraySet;
 import android.util.Log;
-import android.view.Gravity;
-import android.widget.Button;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+
 
 
 public class AddFragment extends Fragment {
 
 
-    public HashSet<Budget> budgets = new HashSet<>();
+    public HashSet<Budget> budgets;
     private DatabaseReference userRef;
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     public AddFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Creates a new instance of this fragment
-     * using the provided parameters.
-     *
-     * @param dbRef a DatabaseReference to the specific UUID
-     * @return A new instance of fragment AddFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static AddFragment newInstance(DatabaseReference dbRef) {
         AddFragment fragment = new AddFragment();
         Bundle args = new Bundle();
@@ -60,18 +40,22 @@ public class AddFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(budgets == null)
+        {
+            assert getArguments() != null;
+            String reference = getArguments().getString(ARG_PARAM1);
+            assert reference != null;
+            userRef = FirebaseDatabase.getInstance()
+                    .getReference()
+                    .child("users").child(reference);
+            budgets = Budget.getBudgets(userRef);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add, container, false);
-        assert getArguments() != null;
-        String reference = getArguments().getString(ARG_PARAM1);
-        assert reference != null;
-        userRef = FirebaseDatabase.getInstance().getReference()
-                .child("users").child(reference);
-        budgets = Budget.getBudgets(userRef);
 
         // UI control for the add budget form
         EditText editBudgetName = view.findViewById(R.id.new_budget_name);

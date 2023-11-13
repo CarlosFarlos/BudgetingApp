@@ -27,9 +27,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
 }
 
 dependencies {
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation("com.google.code.gson:gson:2.8.9")
     implementation("at.favre.lib:bcrypt:0.9.0")
     implementation("com.google.firebase:firebase-auth:20.0.1")
