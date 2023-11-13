@@ -25,7 +25,7 @@ import java.util.HashSet;
  */
 public class DashboardFragment extends Fragment {
 
-    public HashSet<Budget> budgets = new HashSet<>();
+    public ArrayList<Budget> budgets = new ArrayList<>();
     private DatabaseReference userRef;
     private static final String ARG_PARAM1 = "param1";
 
@@ -55,7 +55,7 @@ public class DashboardFragment extends Fragment {
         userRef = FirebaseDatabase.getInstance()
                 .getReference()
                 .child("users").child(reference);
-        budgets = Budget.getBudgets(userRef);
+        budgets = Budget.getBudgets(userRef, budgets);
 
         return view;
     }

@@ -11,13 +11,12 @@
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/pie_chart"
+    <TextView
+        android:id="@+id/test_text"
         android:layout_width="500dp"
-        android:layout_height="500dp"
-
-        android:layout_gravity="center"
-
-
-        />
+        android:layout_height="200dp"
+        android:gravity="center"
+        android:text="PEE"
+        android:textColor="@color/white"
+        android:textSize="50dp" />
 </FrameLayout>

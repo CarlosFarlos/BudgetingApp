@@ -11,8 +11,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="budget_max">Budget Max</string>
-    <string name="new_budget_category_name">New Budget Category Name</string>
-    <string name="add_new_budget">Add New Budget</string>
+    <string name="new_budget_category_name">Budget Category Name</string>
+    <string name="add_new_budget">Add or Overwrite Budget</string>
     <string name="plus_sign_button">plus_sign_button</string>
     <string name="add_new_expense">Add New Expense</string>
     <string name="expense_category_name">Expense Category Name</string>

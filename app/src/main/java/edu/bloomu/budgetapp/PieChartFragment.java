@@ -5,9 +5,11 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -29,8 +31,6 @@ import java.util.ArrayList;
 public class PieChartFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
-
-    private String mParam1;
     private DatabaseReference userRef;
     private ArrayList<Budget> budgets = new ArrayList<>();
 
@@ -51,34 +51,25 @@ public class PieChartFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if(budgets == null)
+        {
+            assert getArguments() != null;
+            String reference = getArguments().getString(ARG_PARAM1);
+            assert reference != null;
+            userRef = FirebaseDatabase.getInstance()
+                    .getReference()
+                    .child("users").child(reference);
+            ArrayList<Budget> newBudgets = new ArrayList<>();
+            budgets = Budget.getBudgets(userRef, newBudgets);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pie_chart, container, false);
-        /**
-        String reference = getArguments().getString(ARG_PARAM1);
-        userRef = FirebaseDatabase.getInstance()
-                .getReference()
-                .child("users").child(reference);
-        budgets = Budget.getBudgets(userRef);
-         **/
-
-        PieChart pieChart = view.findViewById(R.id.pie_chart);
-        PieData data = new PieData();
-        ArrayList<PieEntry> dataVals = new ArrayList<>();
-        dataVals.add(new PieEntry(50, "poop"));
-        dataVals.add(new PieEntry(100, "pee"));
-        PieDataSet pieDataSet = new PieDataSet(dataVals, "");
-        int[] colorClassArray = new int[]{Color.GRAY, Color.BLUE};
-        pieDataSet.setColors(colorClassArray);
-        PieData pieData = new PieData(pieDataSet);
-        pieChart.setData(pieData);
-        pieChart.setDescription(new Description());
-
 
         return view;
     }
+
 }
