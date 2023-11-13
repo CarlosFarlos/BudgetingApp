@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 .child("users").child(dataKey);
 
 
-        Budget.getBudgets(userRef);
+        Budget.getBudgets(userRef, new ArrayList<>());
 
         // Button to navigate to the dashboard fragment
         dashButton = findViewById(R.id.budget_view_btn);
@@ -166,11 +167,12 @@ public class MainActivity extends AppCompatActivity {
     private void onChartButtonClick(View view)
     {
         alternateButtonColor(chartButton);
+        PieChartFragment pieChartFragment = PieChartFragment.newInstance(userRef);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.enter_down_to_up,
                 R.anim.exit_up_to_down, R.anim.enter_down_to_up,
                 R.anim.exit_up_to_down);
-        transaction.replace(R.id.fragment_container, new PieChartFragment());
+        transaction.replace(R.id.fragment_container, pieChartFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

@@ -1,16 +1,13 @@
 package edu.bloomu.budgetapp;
 
-import android.util.Log;
 import androidx.annotation.NonNull;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
+
 import java.util.ArrayList;
-import java.util.HashSet;
 
 /**
  * Budget class to hold information on user budgets
@@ -21,10 +18,13 @@ public class Budget
     private double maxAmount;
     private double currentSpend = 0.0;
 
-    public Budget(String name, double maxAmount)
+    public Budget()
+    {
+    }
+
+    public void setName(String name)
     {
         this.name = name;
-        this.maxAmount = maxAmount;
     }
 
     public double getMaxAmount()
@@ -32,14 +32,10 @@ public class Budget
         return maxAmount;
     }
 
-    public String getMaxAmountString() { return Double.toString(maxAmount); }
-
     public double getCurrentSpend()
     {
         return currentSpend;
     }
-
-    public String getCurrentSpendString() { return Double.toString(currentSpend); }
 
     public void setCurrentSpend(double currentSpend)
     {
@@ -58,42 +54,38 @@ public class Budget
     /**
      * Saves the set of budgets to the database
      */
-    public static void saveBudgets(HashSet<Budget> budgetSet, DatabaseReference userDbRef)
+    public static void saveBudgets(Budget budget, DatabaseReference userDbRef)
     {
-        Gson gson = new Gson();
-        String json = gson.toJson(budgetSet);
-        userDbRef.child("budgets").setValue(json);
+        userDbRef.child("budgets").child(budget.getName()).setValue(budget);
     }
 
     /**
      * Loads the set of budgets from the database
+     *
+     * @return
      */
-    public static HashSet<Budget> getBudgets(DatabaseReference userDbRef)
-    {
-        final String[] json = new String[1];
-        Gson gson = new Gson();
-        userDbRef.addValueEventListener(new ValueEventListener() {
+    public static ArrayList<Budget> getBudgets(DatabaseReference userDbRef, ArrayList<Budget> budgets) {
+        userDbRef.child("budgets").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists())
-                {
-                    json[0] = snapshot.child("budgets").getValue(String.class);
-                    Log.d("Userdata", "Budget JSON:" + json[0]);
+                for (DataSnapshot budgetSnapshot : snapshot.getChildren()) {
+                    Budget budget = budgetSnapshot.getValue(Budget.class);
+                    if (budget != null) {
+                        budgets.add(budget);
+                    }
                 }
+
+                // Now, the 'budgets' ArrayList contains all the loaded budgets
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                // Handle the error
             }
         });
-
-        Type setType = new TypeToken<HashSet<Budget>>(){}.getType();
-        HashSet<Budget> budgets = gson.fromJson(json[0], setType);
-        if (budgets == null) {
-            budgets = new HashSet<>();
-        }
         return budgets;
     }
+
+
 
 }
