@@ -2,19 +2,17 @@ package edu.bloomu.budgetapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.ArraySet;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.Set;
+
 
 /**
  * Displays fragment container and three buttons. The fragment container will
@@ -27,10 +25,9 @@ import java.util.Set;
  */
 public class MainActivity extends AppCompatActivity {
 
-    public EditText editBudgetName, editMaxAmount;
-    public Button buttonSubmit;
+    public static ArrayList<Budget> budgets = new ArrayList<>();
 
-    public DatabaseReference userRef;
+    public static DatabaseReference userRef;
     ImageButton dashButton, addButton, chartButton;
     String username;
     @Override
@@ -42,11 +39,10 @@ public class MainActivity extends AppCompatActivity {
 
         username = intent.getStringExtra("username");
         String dataKey = intent.getStringExtra("dataKey");
+        assert dataKey != null;
         userRef = FirebaseDatabase.getInstance().getReference()
                 .child("users").child(dataKey);
-
-
-        Budget.getBudgets(userRef, new ArrayList<>());
+        budgets = Budget.getBudgets(userRef);
 
         // Button to navigate to the dashboard fragment
         dashButton = findViewById(R.id.budget_view_btn);
@@ -60,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         chartButton = findViewById(R.id.chart_view_btn);
         chartButton.setOnClickListener(this::onChartButtonClick);
 
-        dashButton.callOnClick();
+        addButton.callOnClick();
     }
 
     /**
@@ -128,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Onclick method for the dashboard button
-     * @param view
      */
     private void onDashButtonClick(View view)
     {
@@ -145,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Onclick method for the Add button
-     * @param view
      */
     private void onAddButtonClick(View view)
     {
@@ -162,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Onclick method for the pie chart button
-     * @param view
      */
     private void onChartButtonClick(View view)
     {

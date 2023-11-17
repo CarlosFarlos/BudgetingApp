@@ -1,36 +1,57 @@
 <!-- res/layout/budget_item_layout.xml -->
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:padding="16dp">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="20dp"
+    android:background="@drawable/rounded_card">
 
     <!-- Budget Name -->
     <TextView
         android:id="@+id/textViewBudgetName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Budget Name"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <!-- Amount Spent -->
     <TextView
         android:id="@+id/textViewAmountSpent"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewBudgetName"
         android:layout_marginTop="8dp"
         android:text="Amount Spent: $0.00"
-        android:textSize="14sp"/>
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewBudgetName"/>
 
     <!-- Maximum Amount -->
     <TextView
         android:id="@+id/textViewMaxAmount"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewAmountSpent"
         android:layout_marginTop="4dp"
         android:text="Max Amount: $0.00"
-        android:textSize="14sp"/>
-</RelativeLayout>
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewAmountSpent"/>
+
+    <TextView
+        android:id="@+id/percent_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="500dp"
+        app:layout_constraintLeft_toLeftOf="@id/textViewAmountSpent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="50dp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

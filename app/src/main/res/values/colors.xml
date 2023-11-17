@@ -4,5 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="logo_yellow">#FFBD58</color>
     <color name="logo_compliment">#D2B48C </color>
-    <color name="card_text">#333333</color>
+    <color name="background">#333333</color>
 </resources>

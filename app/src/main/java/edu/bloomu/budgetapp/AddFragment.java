@@ -1,32 +1,29 @@
 package edu.bloomu.budgetapp;
 
-import android.media.Image;
+import android.content.Context;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 
 
 public class AddFragment extends Fragment {
 
 
-    public ArrayList<Budget> budgets;
-    private DatabaseReference userRef;
+    public ArrayList<Budget> budgets = MainActivity.budgets;
+    private final DatabaseReference userRef = MainActivity.userRef;
     private static final String ARG_PARAM1 = "param1";
+
 
     public AddFragment() {
         // Required empty public constructor
@@ -48,11 +45,7 @@ public class AddFragment extends Fragment {
             assert getArguments() != null;
             String reference = getArguments().getString(ARG_PARAM1);
             assert reference != null;
-            userRef = FirebaseDatabase.getInstance()
-                    .getReference()
-                    .child("users").child(reference);
-            ArrayList<Budget> newBudgets = new ArrayList<>();
-            budgets = Budget.getBudgets(userRef, newBudgets);
+            budgets = Budget.getBudgets(userRef);
         }
     }
 
@@ -89,9 +82,10 @@ public class AddFragment extends Fragment {
         if(!isBudgetName(name))
         {
             Toast.makeText(getActivity(), "That budget does not exist!",
-                    Toast.LENGTH_SHORT);
+                    Toast.LENGTH_SHORT).show();
         } else {
             Budget existingBudget = findBudget(name);
+            assert existingBudget != null;
             double currentSpend = existingBudget.getCurrentSpend();
             double maxAmount = existingBudget.getMaxAmount();
 
@@ -105,6 +99,7 @@ public class AddFragment extends Fragment {
             }
             Budget.saveBudgets(existingBudget, userRef);
         }
+        hideKeyboard();
     }
 
     /**
@@ -125,15 +120,17 @@ public class AddFragment extends Fragment {
             Toast.makeText(getActivity(), "Existing Budget Overwritten.",
                     Toast.LENGTH_SHORT).show();
 
+            assert existingBudget != null;
             Budget.saveBudgets(existingBudget, userRef);
         } else {
             Budget newBudget = new Budget();
             newBudget.setName(name);
             newBudget.setMaxAmount(Double.parseDouble(max));
             budgets.add(newBudget);
-            Budget.saveBudgets(newBudget, userRef);
+            Toast.makeText(getActivity(), "New Budget added.",
+                    Toast.LENGTH_SHORT).show();
         }
-        printBudgetNames();
+        hideKeyboard();
     }
 
     /**
@@ -168,8 +165,19 @@ public class AddFragment extends Fragment {
         return null;
     }
 
-    private void printBudgetNames()
+    /**
+     * Minimizes the keyboard for the device.
+     */
+    private void hideKeyboard()
     {
+        View view = getActivity().getCurrentFocus();
+        if(view != null)
+        {
+            InputMethodManager inputMethodManager = (InputMethodManager)
+                    getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
     }
 
 }

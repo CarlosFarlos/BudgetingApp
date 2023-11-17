@@ -31,7 +31,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity
 {
-
     FirebaseDatabase db;
     FirebaseAuth auth;
     EditText unameField, pwordField;
@@ -161,6 +160,15 @@ public class LoginActivity extends AppCompatActivity
     {
         String enteredUser = unameField.getText().toString();
         String enteredPass = pwordField.getText().toString();
+
+        // If fields are empty, do not create a user.
+        if(enteredUser.isEmpty() || enteredPass.isEmpty())
+        {
+            Toast.makeText(getApplicationContext(), "Please fill out all fields."
+            , Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         DatabaseReference userRef = FirebaseDatabase
                 .getInstance()
                 .getReference("users");
@@ -168,6 +176,8 @@ public class LoginActivity extends AppCompatActivity
         Query usernameQuery = userRef
                 .orderByChild("username")
                 .equalTo(enteredUser);
+
+        // Query the database to check if the user already exists, if not make user.
         usernameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

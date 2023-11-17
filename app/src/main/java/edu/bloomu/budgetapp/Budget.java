@@ -22,6 +22,7 @@ public class Budget
     {
     }
 
+
     public void setName(String name)
     {
         this.name = name;
@@ -64,7 +65,8 @@ public class Budget
      *
      * @return
      */
-    public static ArrayList<Budget> getBudgets(DatabaseReference userDbRef, ArrayList<Budget> budgets) {
+    public static ArrayList<Budget> getBudgets(DatabaseReference userDbRef) {
+        ArrayList<Budget> budgets = new ArrayList<>();
         userDbRef.child("budgets").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -74,8 +76,6 @@ public class Budget
                         budgets.add(budget);
                     }
                 }
-
-                // Now, the 'budgets' ArrayList contains all the loaded budgets
             }
 
             @Override
