@@ -1,6 +1,8 @@
 package edu.bloomu.budgetapp;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
@@ -67,6 +69,19 @@ public class AddFragment extends Fragment {
         ImageButton submitExpense = view.findViewById(R.id.add_expense_btn);
         submitExpense.setOnClickListener(View -> addNewExpense(currentBudgetName, currentSpent));
 
+        // UI Control for the remove budget form
+        EditText removeBudgetName = view.findViewById(R.id.budget_category_name);
+        ImageButton removeBudget = view.findViewById(R.id.remove_budget_btn);
+        removeBudget.setOnClickListener(
+                View -> showConfirmationBox("removeBudget", removeBudgetName));
+
+        // UI Control for the clear budget button
+        ImageButton clearBudget = view.findViewById(R.id.clear_budget_btn);
+        EditText emptyText = new EditText(getActivity());
+        clearBudget.setOnClickListener(
+                View -> showConfirmationBox("clearBudget", emptyText));
+
+
         return view;
     }
 
@@ -96,6 +111,8 @@ public class AddFragment extends Fragment {
                         Toast.LENGTH_SHORT).show();
             } else {
                 existingBudget.setCurrentSpend(spent + currentSpend);
+                Toast.makeText(getActivity(), "Expense added.",
+                        Toast.LENGTH_SHORT).show();
             }
             Budget.saveBudgets(existingBudget, userRef);
         }
@@ -129,8 +146,80 @@ public class AddFragment extends Fragment {
             budgets.add(newBudget);
             Toast.makeText(getActivity(), "New Budget added.",
                     Toast.LENGTH_SHORT).show();
+            Budget.saveBudgets(newBudget, userRef);
         }
         hideKeyboard();
+    }
+
+    /**
+     * Removes the Budget from the list of budgets
+     */
+    private void removeBudget(EditText budgetName)
+    {
+        String name = budgetName.getText().toString();
+        if(budgets.isEmpty()) return;
+        else if(!isBudgetName(name))
+        {
+            Toast.makeText(getActivity(), "Budget does not exist.",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            budgets.remove(findBudget(name));
+            Toast.makeText(getActivity(), "Budget category removed.",
+                    Toast.LENGTH_SHORT).show();
+            Budget.removeBudget(name, userRef);
+        }
+    }
+
+    /**
+     * Clears the list of budgets
+     */
+    private void clearBudget()
+    {
+        if(budgets.isEmpty())
+        {
+            Toast.makeText(getActivity(), "There is no list to remove.",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            budgets.clear();
+            Toast.makeText(getActivity(), "Budget list cleared.",
+                    Toast.LENGTH_SHORT).show();
+            Budget.clearBudgets(userRef);
+        }
+    }
+
+    /**
+     * Shows a confirmation box for any actions that delete data
+     */
+    private void showConfirmationBox(String buttonName, EditText budgetName)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Confirm Action");
+        builder.setMessage("Are you sure you want to perform this action?");
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (buttonName)
+                {
+                    case "removeBudget":
+                        removeBudget(budgetName);
+                        break;
+                    case "clearBudget":
+                        clearBudget();
+                        break;
+                }
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();;
     }
 
     /**

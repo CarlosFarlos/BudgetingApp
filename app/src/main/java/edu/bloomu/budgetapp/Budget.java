@@ -61,6 +61,22 @@ public class Budget
     }
 
     /**
+     * Removes an individual budget from the database
+     */
+    public static void removeBudget(String budgetName, DatabaseReference userDbRef)
+    {
+        userDbRef.child("budgets").child(budgetName).removeValue();
+    }
+
+    /**
+     * Removes all budgets from the database
+     */
+    public static void clearBudgets(DatabaseReference userDbRef)
+    {
+        userDbRef.child("budgets").removeValue();
+    }
+
+    /**
      * Loads the set of budgets from the database
      *
      * @return

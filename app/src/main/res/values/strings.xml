@@ -17,4 +17,6 @@
     <string name="add_new_expense">Add New Expense</string>
     <string name="expense_category_name">Expense Category Name</string>
     <string name="amount_spent">Amount Spent</string>
+    <string name="remove_category">Remove a budget category</string>
+    <string name="clear_list_of_budgets">Clear list of Budgets</string>
 </resources>

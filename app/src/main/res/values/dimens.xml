@@ -5,4 +5,13 @@
     <dimen name="pad_text">25sp</dimen>
     <dimen name="end_pad">30dp</dimen>
     <dimen name="top_margin">75dp</dimen>
+    <dimen name="form_layout_width">600dp</dimen>
+    <dimen name="form_layout_height">125dp</dimen>
+    <dimen name="top_margin_login">50sp</dimen>
+    <dimen name="bottom_margin_login">300sp</dimen>
+    <dimen name="button_layout_width_login">200sp</dimen>
+    <dimen name="button_layout_height_login">50sp</dimen>
+    <dimen name="login_text_size">15sp</dimen>
+    <dimen name="margin_end_login">150sp</dimen>
+    <dimen name="layout_height_main">1125sp</dimen>
 </resources>

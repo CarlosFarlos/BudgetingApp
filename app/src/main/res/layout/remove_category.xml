@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="125dp"
+    android:layout_width="400dp"
+    android:padding="5dp"
+    android:background="@drawable/adder_box"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/remove_budget_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:text="@string/remove_category"
+        android:textStyle="bold"
+        android:textColor="@color/logo_yellow"
+        tools:ignore="RelativeOverlap" />
+
+    <EditText
+        android:id="@+id/budget_category_name"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/logo_yellow"
+        android:textColorHint="@color/logo_yellow"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/remove_budget_category"
+        android:layout_alignParentStart="true"
+        android:inputType="text"
+        android:hint="@string/new_budget_category_name"
+        android:autofillHints="" />
+
+
+    <ImageButton
+        android:id="@+id/remove_budget_btn"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/add_invert"
+        android:rotation="45"
+        android:layout_marginEnd="30dp"
+        android:background="@null"
+        android:contentDescription="@string/plus_sign_button" />
+</RelativeLayout>

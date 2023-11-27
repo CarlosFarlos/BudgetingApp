@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="125dp"
+    android:layout_width="400dp"
+    android:padding="5dp"
+    android:background="@drawable/adder_box"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/clear_budgets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="20dp"
+        android:text="@string/clear_list_of_budgets"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:textColor="@color/logo_yellow"
+        tools:ignore="RelativeOverlap" />
+
+
+    <ImageButton
+        android:id="@+id/clear_budget_btn"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/add_invert"
+        android:rotation="45"
+        android:layout_marginEnd="30dp"
+        android:background="@null"
+        android:contentDescription="@string/plus_sign_button" />
+</RelativeLayout>
