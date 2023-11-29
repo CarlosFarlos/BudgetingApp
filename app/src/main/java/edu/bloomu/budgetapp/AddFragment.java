@@ -92,6 +92,11 @@ public class AddFragment extends Fragment {
     {
         String name = budgetName.getText().toString();
         String temp = spentAmount.getText().toString();
+        if(name.isEmpty() || temp.isEmpty()){
+            Toast.makeText(getActivity(), "Please fill out all fields.",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
         double spent = Double.parseDouble(temp);
 
         if(!isBudgetName(name))
@@ -126,6 +131,12 @@ public class AddFragment extends Fragment {
     {
         String name = budgetName.getText().toString();
         String max = maxAmount.getText().toString();
+        if(name.isEmpty() || max.isEmpty())
+        {
+            Toast.makeText(getActivity(), "Please fill out fields.",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         if(isBudgetName(name))
         {
@@ -139,7 +150,7 @@ public class AddFragment extends Fragment {
 
             assert existingBudget != null;
             Budget.saveBudgets(existingBudget, userRef);
-        } else {
+        } else{
             Budget newBudget = new Budget();
             newBudget.setName(name);
             newBudget.setMaxAmount(Double.parseDouble(max));
@@ -192,6 +203,12 @@ public class AddFragment extends Fragment {
      */
     private void showConfirmationBox(String buttonName, EditText budgetName)
     {
+        if(budgetName.getText().toString().isEmpty()
+                && buttonName.equals("removeBudget")){
+            Toast.makeText(getActivity(), "Please fill out the field.",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Confirm Action");
         builder.setMessage("Are you sure you want to perform this action?");
